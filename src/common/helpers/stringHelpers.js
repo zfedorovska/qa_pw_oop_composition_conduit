@@ -1,11 +1,9 @@
-export function capitalize(str) {
-  const firstLetterCap = str.charAt(0).toUpperCase();
+export const capitalize = (s) =>
+  s?.length ? s[0].toUpperCase() + s.slice(1) : s ?? "";
 
-  const remainingLetters = str.slice(1);
-
-  return firstLetterCap + remainingLetters;
-}
-
-export function camelCaseToPhrase(str) {
-  return str.replace(/([A-Z])/g, ' $1');
-}
+export const camelCaseToPhrase = (input) => {
+  if (!input) return "";
+  const normalized = String(input).replace(/[_-]+/g, " ");
+  const spaced = normalized.replace(/([a-z0-9])([A-Z])/g, "$1 $2");
+  return spaced.trim().replace(/\s+/g, " ");
+};

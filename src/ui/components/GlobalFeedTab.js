@@ -4,13 +4,11 @@ import { ArticleFeedItem } from './ArticleFeedItem';
 
 export class GlobalFeedTab extends BaseComponent {
   #globalFeedLink;
-  #previews;
 
   constructor(page, userId = 0) {
     super(page, userId);
     this.#globalFeedLink = this.page.getByText('Global Feed');
-    this.article = 
-    (title) => new ArticleFeedItem(this.page, title, this.userId);
+    this.article = (title) => new ArticleFeedItem(this.page, title, this.userId);
   }
 
   async open() {
@@ -25,18 +23,9 @@ export class GlobalFeedTab extends BaseComponent {
     });
   }
 
-  _articleCardByTitle(title) {
-    const titleLink = this.page.getByRole('link', { name: title });
-    return this.#previews.filter({ has: titleLink });
-  }
-
   async assertArticleVisibleByTitle(title) {
-    await this.step(`Assert article '${title}' is visible in feed`
-      , async () => {
-      await expect(this._articleCardByTitle(title)).toBeVisible();
+    await this.step(`Assert article '${title}' is visible in feed`, async () => {
+      await this.article(title).assertVisible();
     });
   }
-
-
-
 }
